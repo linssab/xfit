@@ -8,7 +8,7 @@ For further information on how to install xraylib on other operational systems, 
 <br>
 This module can be installed with:
 <br><br>
-`pip install xrffitting`
+`pip install xfit`
 <br><br>
 
 #Usage
