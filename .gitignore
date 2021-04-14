@@ -1,0 +1,8 @@
+*.mca
+*.sh
+/build
+/dist
+/xfit.egg-info
+test.py
+main.py
+install.py
