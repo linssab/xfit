@@ -9,7 +9,9 @@ This module can be installed with:<br>
 #Usage
 This module provides the "Spectrum" class. It is possible to initialize this class with a numpy nd.array or loading an *.mca or *.spt file, by giving the path. <br>
 ##Example1
-<br> 
+
+<br>
+
 ```
 import xfit
 import numpy as np
@@ -30,16 +32,20 @@ for element in Spec.areas.keys():
 		linestyle="--")
 plt.show() 
 ```
+
 <br>
+
 ##Example2
+
 <br>
+
 ```
 import xfit
 import numpy as np
 ydata = np.arange(1024)
 fit_pool = {}
 fit_pool["elements"]["Cu"] = ["KA1","KA2","KB1","KB3"]
-fit_pool["bg"] = 1 #Uses continuum estimation for the fit
+fit_pool["bg"] = 1 #Forces the use of continuum estimation for the fit
 Spec = xfit.Spectrum(array=path)
 Spec.calibrate(x=channels, y=energies)
 Spec.fit_fano_and_noise()
@@ -54,6 +60,8 @@ for element in Spec.areas.keys():
 		linestyle="--")
 plt.show() 
 ```
+
 <br>
+
 [xraylib]: http://lvserver.ugent.be/xraylib
 [xlibwiki]: https://github.com/tschoonj/xraylib/wiki/Installation-instructions
