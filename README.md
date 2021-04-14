@@ -1,16 +1,21 @@
-#Installation
-This package requires [xraylib][xraylib]. On Windows, it can be installed through the Anaconda interface with <br> 
-`conda install -c conda-forge xraylib=4.0.0` <br>
+# Installation
+
+This package requires [xraylib][xraylib]. On Windows, it can be installed through the Anaconda interface with 
+<br><br>
+`conda install -c conda-forge xraylib=4.0.0` 
+<br><br>
 For further information on how to install xraylib on other operational systems, check xraylib [wiki][xlibwiki].
 <br>
-This module can be installed with:<br>
-`pip install xrffitting`<br>
+This module can be installed with:
+<br><br>
+`pip install xrffitting`
+<br><br>
 
 #Usage
-This module provides the "Spectrum" class. It is possible to initialize this class with a numpy nd.array or loading an *.mca or *.spt file, by giving the path. <br>
-##Example1
-
+This module provides the "Spectrum" class. It is possible to initialize this class with a numpy nd.array or loading an *.mca or *.spt file, by giving the path. 
 <br>
+
+## Example1
 
 ```
 import xfit
@@ -19,7 +24,7 @@ import matplotlib.pyplot as plt
 path = r"./test.mca"
 pool_file = r"./pool.txt"
 Spec = xfit.Spectrum(file_path=path)
-Spec.calibrate("from_source")
+Spec.calibrate() #if not input is specified, it gets from the mca or spt header
 Spec.fit_fano_and_noise()
 Spec.create_pool(pool_file)
 Spec.fit()
@@ -35,9 +40,7 @@ plt.show()
 
 <br>
 
-##Example2
-
-<br>
+## Example2
 
 ```
 import xfit
