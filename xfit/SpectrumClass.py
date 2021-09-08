@@ -6,6 +6,12 @@ from .FitMath import fit_single_spectrum
 class Spectrum():
     def __init__(__self__,array=None,file_path=None):
         __self__.specfile = file_path
+        if file_path.endswith(".mca"): 
+            __self__.CALTAG = "<<CALIBRATION>>"
+            __self__.DATTAG = "<<DATA>>"
+        elif file_path.endswith(".spt"):
+            __self__.CALTAG = "[CALIBRATION]"
+            __self__.DATTAG = "[DATA]"
         if array is not None:
             if isinstance(array,np.ndarray):
                 __self__.data = array.astype(np.float32)
@@ -107,10 +113,10 @@ class Spectrum():
         line = mca_file.readline()
         param = []
         while line != "":
-            while "<<CALIBRATION>>" not in line or "[CALIBRATION]" not in line:
+            while __self__.CALTAG not in line:
                 line = mca_file.readline()
                 if line == "": break
-            while "<<DATA>>" not in line or "[DATA]" not in line:
+            while __self__.DATTAG not in line:
                 line = mca_file.readline()
                 if line == "": break
                 line=line.replace('\r','')
@@ -178,6 +184,6 @@ class Spectrum():
 
     def fit(__self__, **kwargs):
         if "pool" in kwargs:
-            pool=pool
+            pool = kwargs["pool"]
         else: pool = __self__.pool
         __self__.areas, __self__.plots = fit_single_spectrum(__self__, pool=pool)

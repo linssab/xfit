@@ -47,6 +47,7 @@ import xfit
 import numpy as np
 ydata = np.arange(1024)
 fit_pool = {}
+fit_pool["elements"] = {}
 fit_pool["elements"]["Cu"] = ["KA1","KA2","KB1","KB3"]
 fit_pool["bg"] = 1 #Forces the use of continuum estimation for the fit
 Spec = xfit.Spectrum(array=path)
