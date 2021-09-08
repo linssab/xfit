@@ -8,7 +8,7 @@ class Spectrum():
         __self__.specfile = file_path
         if array is not None:
             if isinstance(array,np.ndarray):
-                __self__.data = array.astype(np.int32)
+                __self__.data = array.astype(np.float32)
             else:
                 raise TypeError("Array must be a numpy.ndarray object!")
                 return
@@ -38,7 +38,7 @@ class Spectrum():
         # custom MC generated files
         if '#XRMC#' in name:
             Data = []
-            datafile = open(mca)
+            datafile = open(mca, "r")
             lines = datafile.readlines()
             for line in lines:
                 line = line.split()
@@ -51,54 +51,54 @@ class Spectrum():
         # this works for mca extension files
         else:
             datalist=[]
-            with open(mca) as datafile:
+            datafile = open(mca, "r")
+            line = datafile.readline()
+            line = line.replace("\r","")
+            line = line.replace("\n","")
+
+            # AMPTEK files start with this tag
+            if "<<PMCA SPECTRUM>>" in line:
+                while "<<DATA>>" not in line:
+                    line = datafile.readline()
+                    if line == "": break
                 line = datafile.readline()
-                line = line.replace("\r","")
-                line = line.replace("\n","")
-
-                # AMPTEK files start with this tag
-                if "<<PMCA SPECTRUM>>" in line:
-                    while "<<DATA>>" not in line:
-                        line = datafile.readline()
-                        if line == "": break
+                while "<<END>>" not in line:
+                    try: datalist.append(int(line))
+                    except ValueError as exception:
+                        datafile.close()
+                        raise exception.__class__.__name__
                     line = datafile.readline()
-                    while "<<END>>" not in line:
-                        try: datalist.append(int(line))
-                        except ValueError as exception:
-                            datafile.close()
-                            raise exception.__class__.__name__
-                        line = datafile.readline()
-                        if line == "": break
+                    if line == "": break
 
-                # Works if file is just counts per line
-                elif line.isdigit():
-                    while line:
-                        datalist.append(int(line))
-                        line = datafile.readline()
-                        if line == "": break
-                
-                elif "[LIDAQ1ch Spectrum]" in line:
-                    while "[DATA]" not in line:
-                        line = datafile.readline()
-                        if line == "": break
+            # Works if file is just counts per line
+            elif line.isdigit():
+                while line:
+                    datalist.append(int(line))
                     line = datafile.readline()
-                    while line:
-                        datalist.append(int(line))
-                        line = datafile.readline()
-                        if line == "": break
+                    if line == "": break
+            
+            elif "[LIDAQ1ch Spectrum]" in line:
+                while "[DATA]" not in line:
+                    line = datafile.readline()
+                    if line == "": break
+                line = datafile.readline()
+                while line:
+                    datalist.append(int(line))
+                    line = datafile.readline()
+                    if line == "": break
 
-                # if file has two columns separated by space or tab
-                elif "\t" in line or " " in line:
-                    while line:
-                        counts = line.split("\t")[-1]
-                        if counts.isdigit(): datalist.append(int(counts))
-                        else:
-                            counts = line.split(" ")[-1]
-                            datalist.append(float(counts)*10e3)
-                        line = datafile.readline()
-                        if line == "": break
-                del datafile
-            Data = np.asarray(datalist, dtype=np.int32)
+            # if file has two columns separated by space or tab
+            elif "\t" in line or " " in line:
+                while line:
+                    counts = line.split("\t")[-1]
+                    if counts.isdigit(): datalist.append(int(counts))
+                    else:
+                        counts = line.split(" ")[-1]
+                        datalist.append(float(counts)*10e3)
+                    line = datafile.readline()
+                    if line == "": break
+            datafile.close()
+            Data = np.asarray(datalist, dtype=np.float32)
         __self__.data = Data
         return
 
@@ -107,10 +107,10 @@ class Spectrum():
         line = mca_file.readline()
         param = []
         while line != "":
-            while "<<CALIBRATION>>" not in line:
+            while "<<CALIBRATION>>" not in line or "[CALIBRATION]" not in line:
                 line = mca_file.readline()
                 if line == "": break
-            while "<<DATA>>" not in line:
+            while "<<DATA>>" not in line or "[DATA]" not in line:
                 line = mca_file.readline()
                 if line == "": break
                 line=line.replace('\r','')

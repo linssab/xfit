@@ -3,6 +3,7 @@
 /build
 /dist
 /xfit.egg-info
+/__pycache__
 test.py
 main.py
 install.py
