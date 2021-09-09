@@ -4,7 +4,7 @@
 /dist
 /xfit.egg-info
 /UNKNOWN.egg-info/
-/__pycache__
+**/__pycache__
 test.py
 main.py
 install.py

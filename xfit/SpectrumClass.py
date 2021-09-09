@@ -6,12 +6,13 @@ from .FitMath import fit_single_spectrum
 class Spectrum():
     def __init__(__self__,array=None,file_path=None):
         __self__.specfile = file_path
-        if file_path.endswith(".mca"): 
-            __self__.CALTAG = "<<CALIBRATION>>"
-            __self__.DATTAG = "<<DATA>>"
-        elif file_path.endswith(".spt"):
-            __self__.CALTAG = "[CALIBRATION]"
-            __self__.DATTAG = "[DATA]"
+        if file_path is not None:
+            if file_path.endswith(".mca"): 
+                __self__.CALTAG = "<<CALIBRATION>>"
+                __self__.DATTAG = "<<DATA>>"
+            elif file_path.endswith(".spt"):
+                __self__.CALTAG = "[CALIBRATION]"
+                __self__.DATTAG = "[DATA]"
         if array is not None:
             if isinstance(array,np.ndarray):
                 __self__.data = array.astype(np.float32)
