@@ -11,7 +11,7 @@ This module can be installed with:
 `pip install xfit`
 <br><br>
 
-#Usage
+# Usage
 This module provides the "Spectrum" class. It is possible to initialize this class with a numpy nd.array or loading an *.mca or *.spt file, by giving the path. 
 <br>
 
@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 path = r"./test.mca"
 pool_file = r"./pool.txt"
 Spec = xfit.Spectrum(file_path=path)
-Spec.calibrate() #if not input is specified, it gets from the mca or spt header
+Spec.calibrate() #if no arguments are passed, it gets the parameters from the mca or spt header
 Spec.fit_fano_and_noise()
 Spec.create_pool(pool_file)
 Spec.fit()
@@ -50,11 +50,12 @@ fit_pool = {}
 fit_pool["elements"] = {}
 fit_pool["elements"]["Cu"] = ["KA1","KA2","KB1","KB3"]
 fit_pool["bg"] = 1 #Forces the use of continuum estimation for the fit
-Spec = xfit.Spectrum(array=path)
+Spec = xfit.Spectrum(array=ydata)
 Spec.calibrate(x=channels, y=energies)
 Spec.fit_fano_and_noise()
 Spec.pool = fit_pool
 Spec.fit()
+#or simply: Spec.fit(pool=fit_pool)
 plt.plot(Spec.energyaxis, Spec.data)
 for element in Spec.areas.keys():
 	plt.plot(Spec.energyaxis, 
