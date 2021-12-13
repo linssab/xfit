@@ -13,14 +13,19 @@ class Spectrum():
             elif file_path.endswith(".spt"):
                 __self__.CALTAG = "[CALIBRATION]"
                 __self__.DATTAG = "[DATA]"
-        if array is not None:
+            try: __self__.getdata()
+            except: 
+                print("Failed to read the file! xfit only supports *.mca and *.spt files.")
+                return
+        elif array is not None:
             if isinstance(array,np.ndarray):
                 __self__.data = array.astype(np.float32)
             else:
                 raise TypeError("Array must be a numpy.ndarray object!")
                 return
         else:
-            __self__.getdata()
+            raise IOError("Failed to initialize! No file or array specified!")
+            return
         __self__.continuum = np.zeros(__self__.data.shape[0],dtype=np.float32)
         __self__.energyaxis = np.zeros(__self__.data.shape[0],dtype=np.float32)
         __self__.config = float
