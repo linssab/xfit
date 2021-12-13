@@ -1,5 +1,6 @@
 import numpy as np
 import os, sys
+from .Continuum import peakstrip
 from .SimpleMath import *
 from .FitMath import fit_single_spectrum
 
@@ -31,6 +32,14 @@ class Spectrum():
         __self__.config = float
         __self__.gain = float
         __self__.FN = []
+
+    def estimate_continuum(__self__, cycles, width, savgol_win, order):
+        __self__.continuum = peakstrip(__self__.data, 
+                cycles, 
+                width, 
+                savgol_win, 
+                order)
+        return
 
     def getdata(__self__):
         """ Extract the data contained in spectrum files
@@ -193,3 +202,4 @@ class Spectrum():
             pool = kwargs["pool"]
         else: pool = __self__.pool
         __self__.areas, __self__.plots = fit_single_spectrum(__self__, pool=pool)
+        return

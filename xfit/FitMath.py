@@ -140,63 +140,6 @@ def residuals(popt, x, y, y_, parameters):
 def GAUSS(x, E_peak, rad_rate, gain, Noise, Fano, s, *A):
     return gain*np.sum((A*rad_rate)/(s*2.5066282746310002)*np.exp(-np.square(x[:,None]-E_peak)/(2*np.square(s))),1)
 
-"""
-global GAIN
-global NOISE
-global FANO
-global ZERO
-
-def Yp(GAIN,NOISE,FANO,ZERO,Ep,Rp,arr):
-    def E(i): 
-        return np.array([ZERO + GAIN*i for i in range(arr.shape[0])])
-    def s2(Ej):
-        return np.square(NOISE/2.3548) + 3.58*FANO*Ej
-    def G(Ej,arr):
-        Ei = E(arr)
-        func = np.zeros(arr.shape[0])
-        for i in range(arr.shape[0]):
-            func[i] += ( GAIN / np.sqrt(s2(Ej)) * 1.77245 ) * np.exp( -np.square(Ej-Ei[i]) / ( 2*s2(Ej) ) )
-        return func
-    output = np.zeros(arr.shape[0])
-    for Rj, Ej in zip(Rp,Ep):
-        output += Rj*G(Ej,arr)
-    return output
-
-def function(Ep,Rp,arr,Y,continuum):
-    global GAIN, NOISE, FANO, ZERO
-    return Yp(GAIN,NOISE,FANO,ZERO,Ep,Rp,arr)# - (Y-continuum)
-
-def test(Spec):
-    import time
-    import matplotlib.pyplot as plt
-    global GAIN, NOISE, FANO, ZERO
-    GAIN = Spec.gain*1000
-    ZERO = Spec.slope*1000
-    NOISE = 80
-    FANO = 0.114
-
-    y_spec = Spec.data
-    continuum = Spec.continuum
-    pool = Spec.pool
-    nchan = y_spec.shape[0]
-
-    arr = np.arange(nchan, dtype=np.int32)
-    elements, lines = work_elements(arr,pool,split=1)
-    output = np.zeros([len(elements.keys()), nchan], dtype=np.float32)
-
-    timer = time.time()
-    el = 0
-    for element in elements.keys():
-        Ep = elements[element]["peaks"]
-        Rp = elements[element]["rad_rates"]
-        output[el] = function(Ep,Rp,arr,y_spec,continuum)
-        el += 1
-    print(time.time()-timer)
-
-    plt.plot(output.sum(0))
-    plt.show()
-"""
-
 def fit_peaks(e_axis, spectrum, continuum, PARAMS, p0=None,
         cycles=FIT_CYCLES):
     gain, noise, fano = PARAMS[0]
@@ -259,6 +202,6 @@ def fit_single_spectrum(SPEC,pool=None):
         peaks = parameters[element]["peaks"]
         rad_rates = parameters[element]["rad_rates"]
         plots[element] = GAUSS(e_axis, peaks, rad_rates, gain, noise, fano, sigma[indexes],
-            results[element]["Areas"])+continuum
+            results[element]["Areas"]) + continuum
     return results, plots
 
