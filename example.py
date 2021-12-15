@@ -19,14 +19,14 @@ if __name__.endswith("__main__"):
     Spec.estimate_continuum(30, 11, 11, 3)
     Spec.fit_fano_and_noise()
 
-    fit_pool = {}
-    fit_pool["elements"] = {}
-    fit_pool["elements"]["Cu"] = ["KA1","KA2","KB1","KB3"]
-    fit_pool["bg"] = 1 #Forces the use of continuum estimation for the fit
-    Spec.fit(pool=fit_pool)
+    #fit_pool = {}
+    #fit_pool["elements"] = {}
+    #fit_pool["elements"]["Cu"] = ["KA1","KA2","KB1","KB3"]
+    #fit_pool["bg"] = 1 #Forces the use of continuum estimation for the fit
+    #Spec.fit(pool=fit_pool)
 
-    #Spec.create_pool(sys.argv[2])
-    #Spec.fit()
+    Spec.create_pool(sys.argv[2])
+    Spec.fit()
 
     fig, ax = plt.subplots()
     ax.plot(Spec.energyaxis, Spec.data, color="black", label="Data")
@@ -39,5 +39,7 @@ if __name__.endswith("__main__"):
                 linestyle="--")
     ax.legend(loc=1, fancybox=1)
     ax.set_yscale("log")
+    ax.set_ylabel("Counts")
+    ax.set_xlabel("Energy (KeV)")
     plt.show()
     sys.exit(0)
