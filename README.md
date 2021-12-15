@@ -16,7 +16,7 @@ This module can be installed with:
 This module provides the "Spectrum" class. It is possible to initialize this class with a numpy nd.array or loading an *.mca or *.spt file, by giving the path.
 For the continuum estimation algorithm, refer to the [Continuum.py][continuum] file.
 <br>
-Test.py file provides a typical *.mca file to use with the [example.py][example] script provided.
+test.mca file provides a typical *.mca file to use with the [example.py][example] script provided.
 
 ## Example 1
 
