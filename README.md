@@ -16,7 +16,7 @@ This module can be installed with:
 This module provides the "Spectrum" class. It is possible to initialize this class with a numpy nd.array or loading an *.mca or *.spt file, by giving the path.
 For the continuum estimation algorithm, refer to the [Continuum.py][continuum] file.
 <br>
-Test.py file provides a common *.mca file to use with the example.py script provided.
+Test.py file provides a typical *.mca file to use with the [example.py][example] script provided.
 
 ## Example 1
 
@@ -50,7 +50,7 @@ plt.show()
 <br>
 
 0.11400000005960464 80.00951851146041 (Fano and Noise values found, respectively)<br>
-![Output](https://github.com/linssab/xfit/tree/master/xfit/Figure_1.png)
+<a href="https://ibb.co/Krpptzw"><img src="https://i.ibb.co/G544Z3T/Figure-1.png" alt="Figure-1" border="0"></a>
 
 ## Example 2
 
@@ -90,3 +90,4 @@ plt.show()
 [xlibwiki]: https://github.com/tschoonj/xraylib/wiki/Installation-instructions
 [compwizard]: https://pypi.org/project/compwizard/#description
 [continuum]: https://github.com/linssab/xfit/blob/master/xfit/Continuum.py
+[example]: https://github.com/linssab/xfit/blob/master/example.py
