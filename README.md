@@ -1,16 +1,23 @@
 # Installation
 
 This package requires [xraylib][xraylib] and [compwizard][compwizard]. On Windows, xraylib can be installed through the Anaconda interface.
-<br><br>
-`conda install -c conda-forge xraylib=4.0.0`<br>
-`pip instal compwizard`
-<br><br>
+
+```console
+conda install -c conda-forge xraylib=4.0.0
+```
+
+```console
+pip instal compwizard
+```
+
 For further information on how to install xraylib on other operational systems, check xraylib [wiki][xlibwiki].
-<br>
-This module can be installed with:
-<br><br>
-`pip install xfit`
-<br><br>
+___
+
+## This module can be installed with:
+
+```console
+pip install xfit
+```
 
 # Usage
 This module provides the "Spectrum" class. It is possible to initialize this class with a numpy nd.array or loading an *.mca or *.spt file, by giving the path.
@@ -20,7 +27,7 @@ test.mca file provides a typical *.mca file to use with the [example.py][example
 
 ## Example 1
 
-```
+```python
 import xfit
 import numpy as np
 import matplotlib.pyplot as plt
@@ -54,7 +61,7 @@ plt.show()
 
 ## Example 2
 
-```
+```python
 import xfit
 import numpy as np
 ydata = np.arange(1024)
