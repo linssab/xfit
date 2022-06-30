@@ -33,7 +33,18 @@ class Spectrum():
         __self__.gain = float
         __self__.FN = []
 
-    def estimate_continuum(__self__, cycles, width, savgol_win, order):
+    def estimate_continuum(__self__, cycles: int, width: int, savgol_win: int, order: int):
+    """ Estimates the continuum contribution in the data array and resturns it.
+    
+    ------------------------------------------------------
+    
+    INPUT: 
+        cycles: number of iterations (use 24 if unsure)
+        width: filter width (number of channels to pick to the left and right)
+        savgol_win: Savitzky-Golay filter window width
+        order: Savitzky-Golay filter polynomial order. Must be odd
+
+    """
         __self__.continuum = peakstrip(__self__.data, 
                 cycles, 
                 width, 
